@@ -91,6 +91,8 @@ func unmarshalCompositeType(ty cty.Type) (shim.ValueType, interface{}, error) {
 			}
 		}
 		return shim.TypeMap, &resource{ctyType: ty, schema: properties}, nil
+	case ty.HasDynamicTypes():
+		return shim.TypeDynamic, &resource{ctyType: ty}, nil
 	default:
 		return shim.TypeInvalid, nil, fmt.Errorf("unexpected composite type %v", ty)
 	}
